@@ -30,8 +30,8 @@ class Store(ABC):
         Returns steps: ["ID check", "fraud screen"]
         Subclasses may extend via super().
         """
-        # TODO: implement corporate checks
-        raise NotImplementedError
+        return ["ID check", "fraud screen"]
+        
 
     def close_register(self) -> None:
         pass
@@ -40,8 +40,9 @@ class Store(ABC):
 class FlagshipStore(Store):
     """Flagship adds a VIP grace step after corporate checks."""
     def return_item(self, receipt_id: str, sku: str) -> list[str]:
-        # TODO: call super then append "VIP grace window"
-        raise NotImplementedError
+        steps = super().return_item(receipt_id,sku)
+        steps.append("VIP grace window")
+        return steps
 
 
 class OutletEligible(Store):
