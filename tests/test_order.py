@@ -11,3 +11,12 @@ def test_order_constructors():
     row = {'order_id':'C001', 'channel':'csv', 'lines':'TEE:2:10.00;MUG:1:8.00'}
     o3 = Order.from_csv_row(row)
     assert o3.total == Decimal('28.00')
+
+    # Test CSV channel empty lines
+
+def test_csv_empty_lines():
+
+    row = {'order_id':'C003', 'channel':'csv', 'lines':'TTEE:1:10.00;; ;MUG:2:5.00'}
+    o1 = Order.from_csv_row(row)
+    assert len(o1.basket) == 2
+    assert o1.total == Decimal('20.00')
