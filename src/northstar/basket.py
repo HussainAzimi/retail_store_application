@@ -12,11 +12,25 @@ class Basket(UserList):
     """
     def add_line(self, sku: str, qty: int, price: Decimal) -> None:
         # TODO: validate sku non-empty, qty>0, price>=0 then append tuple
-        raise NotImplementedError
+        if not isinstance(sku, str) or not sku:
+            raise ValueError("sku must be a non-empty string")
+        
+        if not isinstance(qty, int) or qty <= 0:
+            raise ValueError("Quantity must be an integer greater than 0")
+        
+        if not isinstance(price, Decimal) or price < Decimal("0"):
+            raise ValueError("Price must be a Decimal greater or equal to zero ")
+        
+        self.data.append(sku, qty, price)
+
 
     def total(self) -> Decimal:
         # TODO: sum qty*price as Decimal
-        raise NotImplementedError
+        total = Decimal("0.00")
+        for _, qty, price in self.data:
+            total += price * qty
+
+        return total
 
     def __setitem__(self, i, item):
         raise TypeError('use add_line()')
