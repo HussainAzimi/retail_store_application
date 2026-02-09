@@ -19,9 +19,9 @@ class Basket(UserList):
             raise ValueError("Quantity must be an integer greater than 0")
         
         if not isinstance(price, Decimal) or price < Decimal("0"):
-            raise ValueError("Price must be a Decimal greater or equal to zero ")
+            raise ValueError("Price must be a Decimal greater than 0 ")
         
-        self.data.append(sku, qty, price)
+        self.data.append((sku, qty, price))
 
 
     def total(self) -> Decimal:
