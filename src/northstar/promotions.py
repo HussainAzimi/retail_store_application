@@ -45,10 +45,13 @@ class BOGO(Promotion):
 def checkout(store: Store, basket: Basket, promos: list[Promotion], customer_id: str) -> Decimal:
     """Apply eligible promotions (polymorphic) then sell via store."""
     # TODO: loop promos with no isinstance chains
+    working = Basket ()
+    working.data = list(basket.data)
+
     for promo in promos:
         if promo.eligible(customer_id):
-            promo.apply(basket)
+            promo.apply(working)
 
-    return store.sell(basket)
+    return store.sell(working)
 
 
